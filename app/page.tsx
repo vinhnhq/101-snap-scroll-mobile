@@ -6,6 +6,8 @@ export default function Home() {
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		history.scrollRestoration = 'manual';
+
 		const container = scrollContainerRef.current;
 		if (!container) return;
 
@@ -114,9 +116,9 @@ export default function Home() {
 			{/* Screen 4 — Reviews | tall content scrolls inside the fixed 100lvh box */}
 			<section
 				data-testid="slide-4"
-				className="snap-start snap-always h-lvh w-full flex flex-col overflow-y-auto pt-safe pb-safe-min"
+				className="snap-start snap-always h-lvh w-full flex flex-col pt-safe pb-safe-min"
 			>
-				<div className="slide-content">
+				<div className="slide-content flex-1 overflow-y-auto">
 					<h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 px-6 mb-4">What they say.</h2>
 					<div className="flex flex-col gap-4 px-6 pb-2">
 						{[

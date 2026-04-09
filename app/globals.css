@@ -65,7 +65,6 @@ html::after {
   opacity: 0;
   filter: blur(8px);
   transition: opacity 250ms ease-out, filter 250ms ease-out;
-  will-change: filter, opacity;
 }
 
 .slide-content.is-visible {
