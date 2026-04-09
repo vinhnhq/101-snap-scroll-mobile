@@ -10,6 +10,7 @@ Each domain has its own reference doc. All architectural decisions live in [`dec
 | Domain | Reference Doc | Related ADRs |
 |--------|--------------|-------------|
 | Mobile snap scroll + Safari theming | [mobile-web-snap-scroll-theming.md](mobile-web-snap-scroll-theming.md) | ADR-001, 002, 003, 004, 005, 006 |
+| Slide entrance animations | [snap-scroll-animations.md](snap-scroll-animations.md) | ADR-007 |
 
 ---
 

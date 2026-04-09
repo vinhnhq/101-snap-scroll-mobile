@@ -4,7 +4,7 @@
  *
  * Usage:
  *   node scripts/install-skill.mjs <skill-name>
- *   node scripts/install-skill.mjs scroll-entrance-animations
+ *   node scripts/install-skill.mjs vinhn-scroll-entrance-animations
  *
  * Lists available skills if no argument given.
  */

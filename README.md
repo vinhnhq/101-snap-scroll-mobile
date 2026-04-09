@@ -34,8 +34,26 @@ Vertical snap scroll with 5 full-screen slides. Key decisions:
 - **`next-themes`** — flash-free dark/light mode with system preference sync
 - **`theme-color` top bar only** — Safari bottom toolbar cannot be reliably controlled
 
-Full rationale in [`docs/decisions/`](docs/decisions/) (ADR-001 through ADR-006).  
-Implementation patterns in [`docs/mobile-web-snap-scroll-theming.md`](docs/mobile-web-snap-scroll-theming.md).
+Full rationale in [`docs/decisions/`](docs/decisions/) (ADR-001 through ADR-007).  
+Implementation patterns in [`docs/mobile-web-snap-scroll-theming.md`](docs/mobile-web-snap-scroll-theming.md) and [`docs/snap-scroll-animations.md`](docs/snap-scroll-animations.md).
+
+## Agent Skills
+
+This repo ships a reusable Claude Code skill that encodes all mobile snap scroll knowledge (viewport units, safe areas, scroll container architecture, entrance animations, Safari gotchas).
+
+**Install without cloning:**
+
+```bash
+npx degit vinhnhq/101-snap-scroll-mobile/.agents/skills/vinhn-scroll-entrance-animations ~/.claude/skills/vinhn-scroll-entrance-animations
+```
+
+**Install from this repo:**
+
+```bash
+node scripts/install-skill.mjs vinhn-scroll-entrance-animations
+```
+
+The skill is installed to `~/.claude/skills/` where Claude Code auto-discovers it.
 
 ## Pages
 

@@ -10,6 +10,7 @@ Decisions made while building the snap-scroll mobile web app (Next.js + Tailwind
 | [ADR-004](ADR-004-safari-toolbar-color-strategy.md) | Accept Safari bottom toolbar limitation — control top bar only | Accepted |
 | [ADR-005](ADR-005-lvh-viewport-units.md) | Use `lvh` viewport units for stable snap points | Accepted |
 | [ADR-006](ADR-006-safe-area-insets.md) | Safe area inset CSS utilities for notch/home indicator | Accepted |
+| [ADR-007](ADR-007-css-blur-animation-over-view-transition.md) | Use CSS blur-to-clear class toggle instead of React `<ViewTransition>` for entrance animations | Accepted |
 
 ## How to Read These
 
