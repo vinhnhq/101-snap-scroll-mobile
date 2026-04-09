@@ -1,0 +1,10 @@
+{
+	"version": "1.0.0",
+	"organization": "vinhnhq",
+	"date": "April 2026",
+	"abstract": "Pattern for scroll-triggered entrance animations using IntersectionObserver and CSS class toggling. Covers the blur-to-clear CSS transition, critical pitfalls (ViewTransition flash, root element, overflow-y-auto placement, scroll restoration), and snap-scroll specific setup.",
+	"references": [
+		"https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver",
+		"https://developer.mozilla.org/en-US/docs/Web/CSS/filter"
+	]
+}
