@@ -1,26 +1,60 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --page-bg: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --page-bg: #000000;
   }
 }
 
+html,
 body {
-  background: var(--background);
+  background-color: var(--page-bg);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/*
+  Safe-area padding utilities — use these on every full-screen section
+  so content is never overlapped by notch, Dynamic Island, or home indicator.
+*/
+/* Hide scrollbar — must be outside @layer so ::-webkit-scrollbar applies */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer utilities {
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  /* min 40px below home indicator */
+  .pb-safe-min {
+    padding-bottom: max(env(safe-area-inset-bottom), 2.5rem);
+  }
+}
+
+/*
+  Add a hidden 1px spacer so the root document is always
+  scrollable — enables window.scrollBy(0,±1) to nudge Safari UIKit.
+*/
+html::after {
+  content: '';
+  display: block;
+  height: 1px;
 }
