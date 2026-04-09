@@ -7,7 +7,7 @@ export function Eruda() {
 		const script = document.createElement("script");
 		script.src = "//cdn.jsdelivr.net/npm/eruda";
 		script.onload = () => {
-			// @ts-ignore
+			// @ts-expect-error
 			window.eruda?.init();
 		};
 		document.body.appendChild(script);

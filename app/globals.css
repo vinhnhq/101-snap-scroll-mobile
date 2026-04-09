@@ -3,24 +3,24 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --page-bg: #ffffff;
+	--background: #ffffff;
+	--foreground: #171717;
+	--page-bg: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --page-bg: #000000;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+		--page-bg: #000000;
+	}
 }
 
 html,
 body {
-  background-color: var(--page-bg);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--page-bg);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 /*
@@ -29,24 +29,24 @@ body {
 */
 /* Hide scrollbar — must be outside @layer so ::-webkit-scrollbar applies */
 .scrollbar-hide {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 }
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 @layer utilities {
-  .pt-safe {
-    padding-top: env(safe-area-inset-top);
-  }
-  .pb-safe {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  /* min 40px below home indicator */
-  .pb-safe-min {
-    padding-bottom: max(env(safe-area-inset-bottom), 2.5rem);
-  }
+	.pt-safe {
+		padding-top: env(safe-area-inset-top);
+	}
+	.pb-safe {
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+	/* min 40px below home indicator */
+	.pb-safe-min {
+		padding-bottom: max(env(safe-area-inset-bottom), 2.5rem);
+	}
 }
 
 /*
@@ -54,28 +54,30 @@ body {
   scrollable — enables window.scrollBy(0,±1) to nudge Safari UIKit.
 */
 html::after {
-  content: '';
-  display: block;
-  height: 1px;
+	content: "";
+	display: block;
+	height: 1px;
 }
 
 /* ─── Slide entrance animation ──────────────────────────────────────────── */
 
 .slide-content {
-  opacity: 0;
-  filter: blur(8px);
-  transition: opacity 250ms ease-out, filter 250ms ease-out;
+	opacity: 0;
+	filter: blur(8px);
+	transition:
+		opacity 250ms ease-out,
+		filter 250ms ease-out;
 }
 
 .slide-content.is-visible {
-  opacity: 1;
-  filter: blur(0);
+	opacity: 1;
+	filter: blur(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slide-content {
-    transition: none;
-    opacity: 1;
-    filter: none;
-  }
+	.slide-content {
+		transition: none;
+		opacity: 1;
+		filter: none;
+	}
 }

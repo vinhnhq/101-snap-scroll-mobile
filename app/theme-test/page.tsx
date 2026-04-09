@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 /**
  * Platform-aware theme-color defaults
@@ -65,18 +65,48 @@ export default function ThemeTestPage() {
 			style={{ backgroundColor: themeColor, color: textColor }}
 		>
 			<div>
-				<p style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: mutedColor, marginBottom: 8 }}>
+				<p
+					style={{
+						fontSize: 11,
+						fontWeight: 600,
+						letterSpacing: "0.12em",
+						textTransform: "uppercase",
+						color: mutedColor,
+						marginBottom: 8,
+					}}
+				>
 					Theme Color Test
 				</p>
-				<h1 style={{ fontSize: 40, fontWeight: 900, margin: 0, lineHeight: 1.1 }}>
+				<h1
+					style={{ fontSize: 40, fontWeight: 900, margin: 0, lineHeight: 1.1 }}
+				>
 					{isDark ? "Dark" : "Light"} Mode
 				</h1>
 			</div>
 
 			<div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-				<Row label="Platform" value={platform} muted={mutedColor} card={cardBg} text={textColor} />
-				<Row label="Scheme" value={scheme} muted={mutedColor} card={cardBg} text={textColor} />
-				<Row label="theme-color" value={themeColor} muted={mutedColor} card={cardBg} text={textColor} accent={themeColor} />
+				<Row
+					label="Platform"
+					value={platform}
+					muted={mutedColor}
+					card={cardBg}
+					text={textColor}
+				/>
+				<Row
+					label="Scheme"
+					value={scheme}
+					muted={mutedColor}
+					card={cardBg}
+					text={textColor}
+				/>
+				<Row
+					label="theme-color"
+					value={themeColor}
+					muted={mutedColor}
+					card={cardBg}
+					text={textColor}
+					accent={themeColor}
+				/>
 			</div>
 
 			{/* Colour swatch */}
@@ -97,13 +127,43 @@ export default function ThemeTestPage() {
 	);
 }
 
-function Row({ label, value, muted, card, text, accent }: {
-	label: string; value: string; muted: string; card: string; text: string; accent?: string;
+function Row({
+	label,
+	value,
+	muted,
+	card,
+	text,
+	accent,
+}: {
+	label: string;
+	value: string;
+	muted: string;
+	card: string;
+	text: string;
+	accent?: string;
 }) {
 	return (
-		<div style={{ backgroundColor: card, borderRadius: 12, padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+		<div
+			style={{
+				backgroundColor: card,
+				borderRadius: 12,
+				padding: "12px 16px",
+				display: "flex",
+				justifyContent: "space-between",
+				alignItems: "center",
+			}}
+		>
 			<span style={{ fontSize: 13, color: muted }}>{label}</span>
-			<span style={{ fontSize: 13, fontWeight: 600, color: accent && accent !== "#ffffff" && accent !== "#000000" ? accent : text }}>
+			<span
+				style={{
+					fontSize: 13,
+					fontWeight: 600,
+					color:
+						accent && accent !== "#ffffff" && accent !== "#000000"
+							? accent
+							: text,
+				}}
+			>
 				{value}
 			</span>
 		</div>

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 export default function Home() {
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		history.scrollRestoration = 'manual';
+		history.scrollRestoration = "manual";
 
 		const container = scrollContainerRef.current;
 		if (!container) return;
@@ -14,16 +14,18 @@ export default function Home() {
 		const observer = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const content = entry.target.querySelector('.slide-content');
+					const content = entry.target.querySelector(".slide-content");
 					if (content) {
-						content.classList.toggle('is-visible', entry.isIntersecting);
+						content.classList.toggle("is-visible", entry.isIntersecting);
 					}
 				}
 			},
 			{ root: container, threshold: 0.6 },
 		);
 
-		const slides = container.querySelectorAll<HTMLElement>('[data-testid^="slide-"]');
+		const slides = container.querySelectorAll<HTMLElement>(
+			'[data-testid^="slide-"]',
+		);
 		for (const slide of slides) observer.observe(slide);
 
 		return () => observer.disconnect();
@@ -34,7 +36,7 @@ export default function Home() {
 			ref={scrollContainerRef}
 			data-testid="scroll-container"
 			className="h-lvh overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-			style={{ WebkitOverflowScrolling: 'touch' }}
+			style={{ WebkitOverflowScrolling: "touch" }}
 		>
 			{/* Screen 1 — Hero */}
 			<section
@@ -76,7 +78,9 @@ export default function Home() {
 					</div>
 					<div>
 						<h2 className="text-2xl font-bold text-white">AirStride Pro</h2>
-						<p className="text-zinc-400 text-sm mt-1">Carbon-fiber midsole · Size 6–14</p>
+						<p className="text-zinc-400 text-sm mt-1">
+							Carbon-fiber midsole · Size 6–14
+						</p>
 					</div>
 					<div className="flex items-center justify-between">
 						<span className="text-3xl font-black text-white">$219</span>
@@ -96,17 +100,26 @@ export default function Home() {
 				className="snap-start snap-always h-lvh w-full flex flex-col justify-center px-6 gap-6 pt-safe pb-safe"
 			>
 				<div className="slide-content">
-					<h2 className="text-2xl font-black text-amber-900 dark:text-amber-100">By the numbers.</h2>
+					<h2 className="text-2xl font-black text-amber-900 dark:text-amber-100">
+						By the numbers.
+					</h2>
 					<div className="grid grid-cols-2 gap-4">
 						{[
-							{ value: '2.4M', label: 'Athletes' },
-							{ value: '98%', label: 'Satisfaction' },
-							{ value: '42', label: 'Countries' },
-							{ value: '12yr', label: 'In the game' },
+							{ value: "2.4M", label: "Athletes" },
+							{ value: "98%", label: "Satisfaction" },
+							{ value: "42", label: "Countries" },
+							{ value: "12yr", label: "In the game" },
 						].map((stat) => (
-							<div key={stat.label} className="bg-amber-300 dark:bg-amber-900 rounded-2xl p-4">
-								<p className="text-3xl font-black text-amber-900 dark:text-amber-100">{stat.value}</p>
-								<p className="text-amber-700 dark:text-amber-400 text-sm font-medium">{stat.label}</p>
+							<div
+								key={stat.label}
+								className="bg-amber-300 dark:bg-amber-900 rounded-2xl p-4"
+							>
+								<p className="text-3xl font-black text-amber-900 dark:text-amber-100">
+									{stat.value}
+								</p>
+								<p className="text-amber-700 dark:text-amber-400 text-sm font-medium">
+									{stat.label}
+								</p>
 							</div>
 						))}
 					</div>
@@ -119,43 +132,54 @@ export default function Home() {
 				className="snap-start snap-always h-lvh w-full flex flex-col pt-safe pb-safe-min"
 			>
 				<div className="slide-content flex-1 overflow-y-auto">
-					<h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 px-6 mb-4">What they say.</h2>
+					<h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 px-6 mb-4">
+						What they say.
+					</h2>
 					<div className="flex flex-col gap-4 px-6 pb-2">
 						{[
 							{
-								name: 'Jordan K.',
+								name: "Jordan K.",
 								stars: 5,
 								text: "Best running shoe I've ever owned. My 10k time dropped by 4 minutes.",
-								tag: 'Runner',
+								tag: "Runner",
 							},
 							{
-								name: 'Mia R.',
+								name: "Mia R.",
 								stars: 5,
-								text: 'Lightweight and responsive. Wore them through a full marathon no problem.',
-								tag: 'Triathlete',
+								text: "Lightweight and responsive. Wore them through a full marathon no problem.",
+								tag: "Triathlete",
 							},
 							{
-								name: 'Sam T.',
+								name: "Sam T.",
 								stars: 4,
-								text: 'Great build quality and super stylish. The sizing runs slightly large.',
-								tag: 'Gym',
+								text: "Great build quality and super stylish. The sizing runs slightly large.",
+								tag: "Gym",
 							},
 							{
-								name: 'Priya N.',
+								name: "Priya N.",
 								stars: 5,
-								text: 'Ordered for cross-training and they exceeded every expectation.',
-								tag: 'CrossFit',
+								text: "Ordered for cross-training and they exceeded every expectation.",
+								tag: "CrossFit",
 							},
 						].map((r) => (
-							<div key={r.name} className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm">
+							<div
+								key={r.name}
+								className="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm"
+							>
 								<div className="flex items-center justify-between mb-2">
-									<span className="font-bold text-slate-800 dark:text-slate-100 text-sm">{r.name}</span>
+									<span className="font-bold text-slate-800 dark:text-slate-100 text-sm">
+										{r.name}
+									</span>
 									<span className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 px-2 py-1 rounded-full">
 										{r.tag}
 									</span>
 								</div>
-								<p className="text-yellow-400 text-sm mb-2">{'★'.repeat(r.stars)}</p>
-								<p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">{r.text}</p>
+								<p className="text-yellow-400 text-sm mb-2">
+									{"★".repeat(r.stars)}
+								</p>
+								<p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+									{r.text}
+								</p>
 							</div>
 						))}
 					</div>
