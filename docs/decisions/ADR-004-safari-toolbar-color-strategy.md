@@ -1,5 +1,5 @@
 ---
-# ADR-004: Accept Safari Bottom Toolbar Limitation — Control Top Bar Only
+# ADR-004: Browser Toolbar Color — What Works and What Doesn't
 
 ## Status
 Accepted
@@ -8,9 +8,20 @@ Accepted
 2026-04-09
 
 ## Context
-On iOS Safari, the browser UI has two chrome elements:
+On mobile browsers, the browser UI has chrome elements (status bar, address bar, bottom toolbar) that web pages cannot fully control. Behavior differs significantly between browsers:
+
+**iOS Safari:**
 - **Top status bar** — controllable via `meta[name="theme-color"]`
 - **Bottom navigation toolbar** — not reliably controllable via any web API in regular (non-standalone) Safari
+
+**Chrome iOS:**
+- `theme-color` has **no effect** on Chrome's browser UI on iOS
+- Both address bar and bottom toolbar remain Chrome's default grey regardless of `theme-color`
+- Chrome iOS is forced to use Apple's WKWebView (Apple policy) but renders its own browser shell independently
+- No workaround available — it is a Chrome iOS platform limitation
+
+**Chrome Android:**
+- `theme-color` works well — colors the status bar and address bar
 
 We spent significant time trying to update the bottom toolbar color when the snap scroll slide changes. Every approach was tested and documented:
 
@@ -42,12 +53,15 @@ const color = isDark() ? "#000000" : "#ffffff";
 
 Platform defaults pre-defined:
 
-| Platform | Light | Dark |
-|----------|-------|------|
-| iOS Safari | `#ffffff` | `#000000` (true black) |
-| Android Chrome | `#ffffff` | `#121212` (Material surface) |
+| Platform | `theme-color` works? | Light | Dark |
+|----------|---------------------|-------|------|
+| iOS Safari | ✓ Top bar | `#ffffff` | `#000000` (true black) |
+| Chrome Android | ✓ Status + address bar | `#ffffff` | `#121212` (Material surface) |
+| Chrome iOS | ✗ No effect | — grey — | — grey — |
 
-The bottom toolbar naturally reflects `body { background-color }` over time as Safari takes UIKit snapshots. Since our `--page-bg` is `#ffffff`/`#000000`, the toolbar will eventually match.
+The Safari bottom toolbar naturally reflects `body { background-color }` over time as Safari takes UIKit snapshots. Since our `--page-bg` is `#ffffff`/`#000000`, the toolbar will eventually match.
+
+**Chrome iOS grey bars:** Unfixable in a regular browser tab. The only escape is PWA standalone mode (add to home screen), which removes the browser chrome entirely. Cannot be forced — requires user action.
 
 ## Alternatives Considered
 
@@ -72,3 +86,4 @@ The bottom toolbar naturally reflects `body { background-color }` over time as S
 - No per-slide `theme-color` changes — simplifies the codebase
 - No `themeColor` in Next.js `viewport` export (it would conflict with dynamic updates)
 - This behavior matches major production sites (news apps, media sites)
+- **Chrome iOS users will always see grey browser bars** — accepted, no fix exists for regular browser tabs

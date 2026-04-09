@@ -222,11 +222,19 @@ Use `<ViewTransition>` for route changes and Suspense reveals — not scroll-tri
 
 ---
 
-## 10. Safari Bottom Toolbar (ADR-004)
+## 10. Browser Toolbar Color — What Works and What Doesn't (ADR-004)
 
-**Accept the limitation — control only the top status bar.**
+Browser toolbar theming behaves differently per browser. Know before you spend time on it:
 
-Every approach to update the bottom Safari toolbar was tested and failed or was not production-viable:
+| Browser | `theme-color` effect | Bottom toolbar |
+|---|---|---|
+| iOS Safari | ✓ Top status bar | Reflects `body { background-color }` over time — no JS control |
+| Chrome Android | ✓ Status bar + address bar | Follows `theme-color` |
+| Chrome iOS | ✗ No effect at all | Always grey — no workaround |
+
+**Chrome iOS grey bars are unfixable in a regular browser tab.** Chrome iOS uses Apple's WKWebView (Apple policy) but renders its own browser shell. `theme-color` is ignored entirely. The only escape is PWA standalone mode (user adds to home screen), which removes all browser chrome — but you cannot force this.
+
+**Safari bottom toolbar:** every approach was tested and failed or was not production-viable:
 
 | Method | Result |
 |---|---|
@@ -236,7 +244,7 @@ Every approach to update the bottom Safari toolbar was tested and failed or was 
 | `alert()` | Works but blocks UI — not viable |
 | Body as scroll container | Works but breaks snap stability (ADR-002) |
 
-Production pattern: set `theme-color` to black/white. The bottom toolbar naturally reflects `body { background-color }` over time as Safari snapshots.
+**Production pattern:** set `theme-color` to black/white. Safari bottom toolbar naturally reflects `body { background-color }` over time as UIKit takes snapshots.
 
 Do NOT set `themeColor` in Next.js `viewport` export — it injects a static meta that conflicts with dynamic updates.
 
