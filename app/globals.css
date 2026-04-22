@@ -16,6 +16,10 @@
 	}
 }
 
+html {
+	font-size: clamp(14px, 2vw + 1vh, 18px);
+}
+
 html,
 body {
 	background-color: var(--page-bg);
