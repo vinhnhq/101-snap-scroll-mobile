@@ -12,9 +12,10 @@ export function DevNav() {
 	const pathname = usePathname();
 	return (
 		<div
+			data-testid="dev-nav"
 			style={{
 				position: "fixed",
-				bottom: 24,
+				bottom: "max(env(safe-area-inset-bottom), 24px)",
 				right: 16,
 				zIndex: 9999,
 				display: "flex",

@@ -35,4 +35,19 @@ test.describe("Fluid responsive sizing", () => {
 			.evaluate((el) => getComputedStyle(el).scrollSnapType);
 		expect(snapType).toMatch(/mandatory/);
 	});
+
+	test("dev-nav bottom uses env(safe-area-inset-bottom) to clear home indicator", async ({
+		page,
+	}) => {
+		await page.goto("/");
+		// Check inline style attribute, not computed (env() resolves to 0 in test env)
+		const bottomStyle = await page.evaluate(() => {
+			const nav = document.querySelector<HTMLElement>("[data-testid='dev-nav']");
+			if (!nav) return null;
+			return nav.style.bottom;
+		});
+		if (bottomStyle !== null) {
+			expect(bottomStyle).toContain("env(safe-area-inset-bottom)");
+		}
+	});
 });
