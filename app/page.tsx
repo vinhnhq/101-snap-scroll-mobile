@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { MobileSlide } from "@/components/mobile-slide";
 
 export default function Home() {
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -39,10 +40,7 @@ export default function Home() {
 			style={{ WebkitOverflowScrolling: "touch" }}
 		>
 			{/* Screen 1 — Hero */}
-			<section
-				data-testid="slide-1"
-				className="snap-start snap-always h-lvh w-full flex flex-col justify-end px-6 pt-safe pb-safe-min"
-			>
+			<MobileSlide data-testid="slide-1" className="justify-end px-6">
 				<div className="slide-content">
 					<span className="text-sm font-semibold uppercase tracking-widest text-violet-300 dark:text-violet-400 mb-3">
 						New Season
@@ -62,13 +60,10 @@ export default function Home() {
 						Shop Now
 					</button>
 				</div>
-			</section>
+			</MobileSlide>
 
 			{/* Screen 2 — Featured product */}
-			<section
-				data-testid="slide-2"
-				className="snap-start snap-always h-lvh w-full flex flex-col justify-center px-6 gap-5 pt-safe pb-safe"
-			>
+			<MobileSlide data-testid="slide-2" className="justify-center px-6 gap-5">
 				<div className="slide-content">
 					<span className="text-xs font-semibold uppercase tracking-widest text-zinc-500">
 						Featured Drop
@@ -92,13 +87,10 @@ export default function Home() {
 						</button>
 					</div>
 				</div>
-			</section>
+			</MobileSlide>
 
 			{/* Screen 3 — Stats */}
-			<section
-				data-testid="slide-3"
-				className="snap-start snap-always h-lvh w-full flex flex-col justify-center px-6 gap-6 pt-safe pb-safe"
-			>
+			<MobileSlide data-testid="slide-3" className="justify-center px-6 gap-6">
 				<div className="slide-content">
 					<h2 className="text-2xl font-black text-amber-900 dark:text-amber-100">
 						By the numbers.
@@ -124,13 +116,10 @@ export default function Home() {
 						))}
 					</div>
 				</div>
-			</section>
+			</MobileSlide>
 
 			{/* Screen 4 — Reviews | tall content scrolls inside the fixed 100lvh box */}
-			<section
-				data-testid="slide-4"
-				className="snap-start snap-always h-lvh w-full flex flex-col pt-safe pb-safe-min"
-			>
+			<MobileSlide data-testid="slide-4">
 				<div className="slide-content flex-1 overflow-y-auto">
 					<h2 className="text-2xl font-black text-slate-800 dark:text-slate-100 px-6 mb-4">
 						What they say.
@@ -184,13 +173,10 @@ export default function Home() {
 						))}
 					</div>
 				</div>
-			</section>
+			</MobileSlide>
 
 			{/* Screen 5 — CTA / Newsletter */}
-			<section
-				data-testid="slide-5"
-				className="snap-start snap-always h-lvh w-full flex flex-col justify-center px-6 gap-6 pt-safe pb-safe-min"
-			>
+			<MobileSlide data-testid="slide-5" className="justify-center px-6 gap-6">
 				<div className="slide-content">
 					<div>
 						<span className="text-sm font-semibold uppercase tracking-widest text-rose-200 dark:text-rose-300">
@@ -219,7 +205,7 @@ export default function Home() {
 						</button>
 					</div>
 				</div>
-			</section>
+			</MobileSlide>
 		</div>
 	);
 }
