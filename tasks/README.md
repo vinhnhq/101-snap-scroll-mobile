@@ -24,3 +24,16 @@ Status legend: ✓ done · → in progress · · backlog
 | 007 | [Install agent-skills](sprint-03-knowledge/007-install-agent-skills.md) | ✓ done |
 | 008 | [Implementation reference doc](sprint-03-knowledge/008-implementation-reference-doc.md) | ✓ done |
 | 009 | [Architecture Decision Records](sprint-03-knowledge/009-adrs.md) | ✓ done |
+
+## Sprint 04 — View Transitions
+| # | Task | Status |
+|---|------|--------|
+| — | [ViewTransition animations](sprint-04-view-transitions/plan.md) | ✓ done |
+
+## Sprint 05 — Fluid Responsive Sizing
+| # | Task | Status |
+|---|------|--------|
+| T1 | [Scale root font-size with clamp()](sprint-05-responsive-sizing/plan.md) | · backlog |
+| T2 | [MobileSlide composition wrapper](sprint-05-responsive-sizing/plan.md) | · backlog |
+| T3 | [Clamp corner/edge positioned elements](sprint-05-responsive-sizing/plan.md) | · backlog |
+| T4 | [Verify — Playwright + DevTools](sprint-05-responsive-sizing/plan.md) | · backlog |
