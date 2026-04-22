@@ -267,3 +267,84 @@ const [mounted, setMounted] = useState(false);
 useEffect(() => setMounted(true), []);
 if (!mounted) return <div className="h-dvh" />;
 ```
+
+---
+
+## 12. Fluid Content Sizing Across Devices
+
+Snap slide height is always `h-lvh` (fixed). The challenge is sizing **content inside** slides so it looks right on both an iPhone SE and an iPhone 15 Pro Max without hardcoding px values.
+
+### The units hierarchy
+
+| Target | Unit | Why |
+|---|---|---|
+| Slide container height | `lvh` | Must be stable snap point — never rem/px |
+| Corner/edge positioning | `vh` / `%` | Relative to slide height |
+| Font sizes, padding, gaps | `clamp()` or `em` | Scales with viewport, not fixed root |
+
+### Option A — Scale the root, use `rem` everywhere (one knob)
+
+```css
+html {
+  font-size: clamp(14px, 2vw + 1vh, 18px);
+}
+
+/* All rem values now scale with viewport automatically */
+.slide-title  { font-size: 1.5rem; }
+.slide-button { padding: 0.75rem 1.5rem; }
+```
+
+Single place to tune. Good for projects where the entire page is mobile snap scroll.
+
+### Option B — `clamp()` per element (more granular control)
+
+```css
+.slide-title   { font-size: clamp(18px, 5vw, 28px); }
+.slide-button  { padding: clamp(8px, 2vw, 14px) clamp(16px, 4vw, 24px); }
+.corner-badge  { bottom: clamp(80px, 12vh, 140px); }
+```
+
+Better when only some components are inside snap slides.
+
+### Option C — Container font-size + `em` (composition wrapper pattern)
+
+Set `font-size` on the slide container; all children use `em` and inherit:
+
+```tsx
+// MobileSlide wrapper — sets the scaling context
+<div
+  className="snap-start snap-always h-lvh w-full"
+  style={{ fontSize: 'clamp(14px, 2vw + 1vh, 18px)' }}
+>
+  <SlideTitle />   {/* uses em — scales with parent */}
+  <SlideButton />
+</div>
+```
+
+```css
+.slide-title  { font-size: 1.4em; }
+.slide-button { padding: 0.6em 1.2em; }
+```
+
+The same `SlideTitle` component works in a desktop layout too — the desktop container sets its own `font-size` and `em` values adapt. No duplication.
+
+### When to split into separate desktop/mobile components
+
+Only when the **layout structure** is fundamentally different — not just differently sized:
+
+- Mobile = full-screen stacked snap slides → Desktop = sidebar + grid → split
+- Mobile = large text → Desktop = same layout, smaller text → use `clamp()`, don't split
+
+Splitting for size alone risks drift: you update the mobile variant and forget the desktop one.
+
+### Safe area insets for corner UI
+
+Corner interactive elements (CTAs, badges, bottom nav) must account for the home indicator:
+
+```css
+.bottom-cta {
+  bottom: max(env(safe-area-inset-bottom), 2.5rem);
+}
+```
+
+`max()` guarantees minimum clearance even on devices without a home indicator.
