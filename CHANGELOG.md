@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.0] - 2026-04-23
+
+### Features
+
+- **Fluid responsive sizing** — root `font-size: clamp(14px, 2vw + 1vh, 18px)` scales across iPhone SE to Pro Max
+- **`MobileSlide` component** — composition wrapper centralising snap/safe-area boilerplate (`snap-start snap-always h-lvh w-full flex flex-col pt-safe pb-safe-min`)
+- **Home indicator clearance** — `max(env(safe-area-inset-bottom), 24px)` on dev nav for correct safe-area floor
+
+### Tooling
+
+- **`scripts/release-check.sh`** — release readiness gate: sprint status, test suite, git dirty check, RELEASES.md log entry, dev→main merge with `--no-ff`
+- **`__project__/tasks/RELEASES.md`** — append-only release log (version, date, sprint status, test counts, merged branch@SHA)
+- **`vinhn-dev-principles` skill** — five behavioral guidelines as a globally installable Claude Code skill (`"global": true`)
+- **`scripts/install-skill.mjs`** — updated to auto-inject `"global": true` skills into `~/.claude/CLAUDE.md`
+
+### Architecture
+
+- Release model switched from git tags to dev→main merge; `dev` branch is now the working branch
+- `KNOWN_FAILURES=2` baseline documented for pre-existing "distinct height" Playwright assertions (all slides use `h-lvh` by design)
+
+---
+
 ## [0.1.0] - 2026-04-09
 
 ### Features

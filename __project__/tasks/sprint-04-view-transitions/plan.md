@@ -91,7 +91,7 @@ Import and render in `layout.tsx` inside the body.
 ### Task 5: Verify — run existing Playwright tests
 **Command:** `npm test`
 
-All 6 tests in `tests/snap-scroll.spec.ts` must pass unchanged.
+All 6 tests in `__tests__/snap-scroll.spec.ts` must pass unchanged.
 
 ---
 

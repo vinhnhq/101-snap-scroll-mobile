@@ -61,9 +61,9 @@ else
 fi
 
 # T2: Inject a backlog item, expect FAIL in output
-echo "| X | [Fake task](x) | · backlog |" >> tasks/README.md
+echo "| X | [Fake task](x) | · backlog |" >> __project__/tasks/README.md
 OUT_WITH_BACKLOG=$(run_script)
-sed -i '' '/| X | \[Fake task\]/d' tasks/README.md
+sed -i '' '/| X | \[Fake task\]/d' __project__/tasks/README.md
 
 if echo "$OUT_WITH_BACKLOG" | grep -qE "FAIL.*backlog|backlog.*FAIL"; then
   ok "FAIL shown when backlog items exist"
@@ -82,16 +82,13 @@ else
   fail "uncommitted check missing"
 fi
 
-if echo "$OUT" | grep -q "Remote sync:"; then
-  ok "remote sync check present"
+if echo "$OUT" | grep -qE "Ahead of|Remote sync:"; then
+  ok "ahead-of-main check present"
 else
-  fail "remote sync check missing"
+  fail "ahead-of-main check missing"
 fi
 
-# T4: Dirty state detection
-touch /tmp/release-check-dirty-test-$$.tmp
-git add /tmp/release-check-dirty-test-$$.tmp 2>/dev/null || true
-# Create an actual dirty file in the repo
+# T4: Dirty state detection — create an untracked file to make git status non-empty
 echo "dirty" > dirty-test-$$.tmp
 OUT_DIRTY=$(run_script)
 rm -f dirty-test-$$.tmp
@@ -126,9 +123,9 @@ else
 fi
 
 # With backlog item injected, script should exit non-zero
-echo "| X | [Fake task](x) | · backlog |" >> tasks/README.md
+echo "| X | [Fake task](x) | · backlog |" >> __project__/tasks/README.md
 SKIP_TESTS=1 bash "$SCRIPT" < /dev/null > /dev/null 2>&1 && GATE_EXIT=0 || GATE_EXIT=$?
-sed -i '' '/| X | \[Fake task\]/d' tasks/README.md
+sed -i '' '/| X | \[Fake task\]/d' __project__/tasks/README.md
 
 if [[ $GATE_EXIT -ne 0 ]]; then
   ok "script exits non-zero when gate fails"

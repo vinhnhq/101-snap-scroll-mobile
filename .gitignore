@@ -44,5 +44,8 @@ next-env.d.ts
 /playwright-report/
 /test-results/
 
+# test harness scratch files
+dirty-test-*.tmp
+
 # local claude settings
 .claude/settings.local.json
