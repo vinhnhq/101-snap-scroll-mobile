@@ -26,8 +26,8 @@ printf "${BLD}RELEASE READINESS CHECK — v${VERSION}${NC}\n"
 echo ""
 
 # ── T2: Sprint status ─────────────────────────────────────────────────────────
-DONE=$(grep -c "✓ done" tasks/README.md 2>/dev/null || echo 0)
-BACKLOG=$(grep -c "· backlog" tasks/README.md 2>/dev/null || echo 0)
+DONE=$(grep -cF "| ✓ done |" tasks/README.md 2>/dev/null) || DONE=0
+BACKLOG=$(grep -cF "| · backlog |" tasks/README.md 2>/dev/null) || BACKLOG=0
 TOTAL=$((DONE + BACKLOG))
 SPRINT_OK=0
 

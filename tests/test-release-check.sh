@@ -63,7 +63,7 @@ fi
 # T2: Inject a backlog item, expect FAIL in output
 echo "| X | [Fake task](x) | · backlog |" >> tasks/README.md
 OUT_WITH_BACKLOG=$(run_script)
-sed -i '' '/| X | \[Fake task\]/d' tasks/README.md  # clean up
+sed -i '' '/| X | \[Fake task\]/d' tasks/README.md
 
 if echo "$OUT_WITH_BACKLOG" | grep -qE "FAIL.*backlog|backlog.*FAIL"; then
   ok "FAIL shown when backlog items exist"
