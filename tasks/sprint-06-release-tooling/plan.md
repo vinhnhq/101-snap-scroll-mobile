@@ -115,7 +115,7 @@ Print the "This will tag vX.Y.Z and push to origin/main" warning only if all gat
 
 ---
 
-### T7 — Confirmation: tag + push
+### T7 — Confirmation: tag + push + release log
 If all gates pass:
 
 1. Print the warning block
@@ -124,9 +124,22 @@ If all gates pass:
    - `git tag vX.Y.Z`
    - `git push origin main`
    - `git push origin vX.Y.Z`
+   - Append a release snapshot to `tasks/RELEASES.md`:
+     ```
+     ## vX.Y.Z — YYYY-MM-DD
+     Sprint status:   PASS ✓  (N/N done)
+     Test suite:      PASS ✓  (N passed, N skipped)
+     Uncommitted:     CLEAN ✓
+     Commits:         N pushed
+     Tag:             vX.Y.Z → pushed
+     ```
+   - `git add tasks/RELEASES.md && git commit -m "chore: log release vX.Y.Z"`
+   - `git push origin main` (push the log commit)
 4. On anything else: print "Aborted." and exit 0
 
-**Acceptance:** Typing `YES` tags + pushes. Typing `no` or pressing Enter aborts cleanly.
+**File:** `tasks/RELEASES.md` — append-only log, newest entry at top.
+
+**Acceptance:** Typing `YES` tags, pushes, appends a snapshot to RELEASES.md, and commits + pushes the log. Typing `no` or pressing Enter aborts cleanly with no side effects.
 
 ---
 
