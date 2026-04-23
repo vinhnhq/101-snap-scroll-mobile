@@ -37,3 +37,14 @@ Status legend: ✓ done · → in progress · · backlog
 | T2 | [MobileSlide composition wrapper](sprint-05-responsive-sizing/plan.md) | ✓ done |
 | T3 | [Clamp corner/edge positioned elements](sprint-05-responsive-sizing/plan.md) | ✓ done |
 | T4 | [Verify — Playwright + DevTools](sprint-05-responsive-sizing/plan.md) | ✓ done |
+
+## Sprint 06 — Release Tooling
+| # | Task | Status |
+|---|------|--------|
+| T1 | [Script scaffold + header](sprint-06-release-tooling/plan.md) | · backlog |
+| T2 | [Sprint status check](sprint-06-release-tooling/plan.md) | · backlog |
+| T3 | [Test suite runner](sprint-06-release-tooling/plan.md) | · backlog |
+| T4 | [Branch / remote state check](sprint-06-release-tooling/plan.md) | · backlog |
+| T5 | [Recent commits list](sprint-06-release-tooling/plan.md) | · backlog |
+| T6 | [Gate summary + color output](sprint-06-release-tooling/plan.md) | · backlog |
+| T7 | [Confirmation: tag + push](sprint-06-release-tooling/plan.md) | · backlog |
