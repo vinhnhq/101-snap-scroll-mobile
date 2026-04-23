@@ -29,8 +29,8 @@ printf "Branch: ${BRANCH} → ${TARGET}\n"
 echo ""
 
 # ── T2: Sprint status ─────────────────────────────────────────────────────────
-DONE=$(grep -cF "| ✓ done |" tasks/README.md 2>/dev/null) || DONE=0
-BACKLOG=$(grep -cF "| · backlog |" tasks/README.md 2>/dev/null) || BACKLOG=0
+DONE=$(grep -cF "| ✓ done |" __project__/tasks/README.md 2>/dev/null) || DONE=0
+BACKLOG=$(grep -cF "| · backlog |" __project__/tasks/README.md 2>/dev/null) || BACKLOG=0
 TOTAL=$((DONE + BACKLOG))
 SPRINT_OK=0
 
@@ -131,7 +131,7 @@ if [[ "$CONFIRM" != "YES" ]]; then
 fi
 
 DATE=$(date +%Y-%m-%d)
-RELEASES="tasks/RELEASES.md"
+RELEASES="__project__/tasks/RELEASES.md"
 
 # Write RELEASES.md on dev before the merge so it's included
 DEV_SHA=$(git rev-parse --short HEAD)
@@ -154,7 +154,7 @@ mv "$TMP" "$RELEASES"
 
 echo ""
 echo "Logging release..."
-git add tasks/RELEASES.md
+git add __project__/tasks/RELEASES.md
 git commit -m "chore: log release v${VERSION}"
 git push origin "${BRANCH}"
 

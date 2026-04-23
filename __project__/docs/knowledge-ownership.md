@@ -64,13 +64,22 @@ Legend:
 | One-shot trigger | `IntersectionObserver` fires only once per element | AI | The `{ once: true }` / `unobserve()` pattern — do you understand why this is needed? |
 | Skill packaging | `vinhn-scroll-entrance-animations` skill | collab | You directed the packaging; AI wrote the skill file |
 
-## Sprint 05 — Responsive Sizing (backlog)
+## Sprint 05 — Responsive Sizing
 
 | Area | Solution | Owner | Notes / Gap to close |
 |------|----------|-------|----------------------|
-| Root font scaling | `clamp()` on `:root { font-size }` | — | Not built yet |
-| Component wrapper | `MobileSlide` composition component | — | Not built yet |
-| Edge element clamping | `clamp()` on positioned elements | — | Not built yet |
+| Root font scaling | `font-size: clamp(14px, 2vw + 1vh, 18px)` on `:root` | collab | You directed the clamp values; AI implemented and wrote Playwright viewport tests |
+| Component wrapper | `MobileSlide` composition component | AI | AI proposed the wrapper to centralise `snap-start h-lvh pt-safe pb-safe-min` |
+| Home indicator floor | `max(env(safe-area-inset-bottom), 24px)` on dev nav | AI | AI proposed `max()` as the floor pattern — do you understand why `padding-bottom: env(...)` alone isn't sufficient? |
+
+## Sprint 06 — Release Tooling
+
+| Area | Solution | Owner | Notes / Gap to close |
+|------|----------|-------|----------------------|
+| Release gate script | `scripts/release-check.sh` — sprint/test/git checks + merge | collab | You drove the spec; AI wrote the bash; you debugged grep/awk bugs together |
+| Dev→main merge model | `git merge dev --no-ff` instead of tags | collab | You decided the model; AI implemented and explained tradeoffs |
+| Bash test harness | `__tests__/test-release-check.sh` with `SKIP_TESTS` / `FORCE_PASS` | AI | AI proposed the test harness pattern — do you understand the pipe-to-bash env var inheritance fix? |
+| `vinhn-dev-principles` skill | Prompt-first behavioral guidelines as global Claude skill | collab | You sourced the principles; AI packaged them into the skill + install flow |
 
 ---
 
@@ -88,6 +97,9 @@ Based on the ownership map above. `AI`-heavy rows = gaps to close.
 | Tailwind v3 vs v4 CSS variable model | low | Can you explain *why* v4 breaks Safari scroll snap? |
 | `next-themes` wiring | medium — you knew the library | Do you understand `suppressHydrationWarning` and why it's needed? |
 | React `<ViewTransition>` API | low — AI proposed and debugged it | You learned it was flawed; do you understand the key-flip unmount cycle? |
+| `clamp()` responsive sizing | medium — you directed the values | Can you derive the `2vw + 1vh` formula and explain what each term contributes? |
+| Bash `grep -cF` with cell anchoring | low — AI debugged the false-positive | Can you explain why anchoring to `\| · backlog \|` was necessary? |
+| Pipe-to-bash env var inheritance | low — AI proposed the fix | Can you explain why `SKIP_TESTS=1 echo "x" \| bash script.sh` does NOT pass the var to bash? |
 
 ---
 

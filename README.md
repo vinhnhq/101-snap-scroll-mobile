@@ -23,6 +23,7 @@ Open [http://localhost:3000](http://localhost:3000) — use browser DevTools mob
 | `npm run format` | Auto-format with Biome |
 | `npm test` | Run Playwright e2e tests |
 | `npm run test:ui` | Playwright UI mode |
+| `bash scripts/release-check.sh` | Release readiness gate (run from `dev` branch) |
 
 ## Architecture
 
@@ -34,26 +35,34 @@ Vertical snap scroll with 5 full-screen slides. Key decisions:
 - **`next-themes`** — flash-free dark/light mode with system preference sync
 - **`theme-color` top bar only** — Safari bottom toolbar cannot be reliably controlled
 
-Full rationale in [`docs/decisions/`](docs/decisions/) (ADR-001 through ADR-007).  
-Implementation patterns in [`docs/mobile-web-snap-scroll-theming.md`](docs/mobile-web-snap-scroll-theming.md) and [`docs/snap-scroll-animations.md`](docs/snap-scroll-animations.md).
+Full rationale in [`__project__/docs/decisions/`](__project__/docs/decisions/) (ADR-001 through ADR-007).  
+Implementation patterns in [`__project__/docs/mobile-web-snap-scroll-theming.md`](__project__/docs/mobile-web-snap-scroll-theming.md) and [`__project__/docs/snap-scroll-animations.md`](__project__/docs/snap-scroll-animations.md).
 
 ## Agent Skills
 
-This repo ships a reusable Claude Code skill that encodes all mobile snap scroll knowledge (viewport units, safe areas, scroll container architecture, entrance animations, Safari gotchas).
+This repo ships two reusable Claude Code skills.
+
+**`vinhn-scroll-entrance-animations`** — All mobile snap scroll knowledge: viewport units, safe areas, scroll container architecture, entrance animations, Safari gotchas. Install per-project.
+
+**`vinhn-dev-principles`** — Five behavioral guidelines for LLM-assisted development (think before coding, simplicity first, surgical changes, goal-driven execution, spec before code). Marked `"global": true` — the install script automatically injects it into `~/.claude/CLAUDE.md` so it applies to every project on the machine.
 
 **Install without cloning:**
 
 ```bash
+# Scroll animations (per-project)
 npx degit vinhnhq/101-snap-scroll-mobile/.agents/skills/vinhn-scroll-entrance-animations ~/.claude/skills/vinhn-scroll-entrance-animations
+
+# Dev principles (global — auto-injects into ~/.claude/CLAUDE.md)
+npx degit vinhnhq/101-snap-scroll-mobile/.agents/skills/vinhn-dev-principles ~/.claude/skills/vinhn-dev-principles
+echo -e '\n@skills/vinhn-dev-principles/SKILL.md' >> ~/.claude/CLAUDE.md
 ```
 
 **Install from this repo:**
 
 ```bash
 node scripts/install-skill.mjs vinhn-scroll-entrance-animations
+node scripts/install-skill.mjs vinhn-dev-principles   # auto-injects into ~/.claude/CLAUDE.md
 ```
-
-The skill is installed to `~/.claude/skills/` where Claude Code auto-discovers it.
 
 ## Pages
 

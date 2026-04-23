@@ -1,0 +1,7 @@
+{
+	"version": "1.0.0",
+	"organization": "vinhnhq",
+	"date": "April 2026",
+	"abstract": "Five behavioral guidelines for LLM-assisted development: think before coding, simplicity first, surgical changes, goal-driven execution, and spec before code. Designed to be globally active across all projects.",
+	"global": true
+}
