@@ -82,10 +82,10 @@ else
   fail "uncommitted check missing"
 fi
 
-if echo "$OUT" | grep -q "Remote sync:"; then
-  ok "remote sync check present"
+if echo "$OUT" | grep -qE "Ahead of|Remote sync:"; then
+  ok "ahead-of-main check present"
 else
-  fail "remote sync check missing"
+  fail "ahead-of-main check missing"
 fi
 
 # T4: Dirty state detection

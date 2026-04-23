@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Release readiness gate — checks sprint status, tests, git state, then
-# tags + pushes on explicit YES confirmation.
-# Usage: bash scripts/release-check.sh
-#        SKIP_TESTS=1 bash scripts/release-check.sh   (for CI / testing)
+# merges dev → main on explicit YES confirmation.
+# Run from the dev branch: bash scripts/release-check.sh
+# SKIP_TESTS=1 bash scripts/release-check.sh   (skips slow Playwright run)
 set -euo pipefail
 
 # ── Config ────────────────────────────────────────────────────────────────────
 KNOWN_FAILURES=2   # pre-existing "each slide has a distinct height" failures
+TARGET="main"      # branch that receives the merge
 SEP=$(printf '═%.0s' $(seq 1 56))
 
 # ── Colors (disable when not a terminal) ─────────────────────────────────────
@@ -16,13 +17,15 @@ else
   GRN=''; RED=''; YLW=''; BLD=''; NC=''
 fi
 
-# ── Version ───────────────────────────────────────────────────────────────────
+# ── Version + branch ─────────────────────────────────────────────────────────
 VERSION=$(grep '"version"' package.json | sed -E 's/.*"version": "([^"]+)".*/\1/')
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 # ── Header ────────────────────────────────────────────────────────────────────
 echo "$SEP"
 echo ""
 printf "${BLD}RELEASE READINESS CHECK — v${VERSION}${NC}\n"
+printf "Branch: ${BRANCH} → ${TARGET}\n"
 echo ""
 
 # ── T2: Sprint status ─────────────────────────────────────────────────────────
@@ -74,20 +77,20 @@ else
 fi
 
 git fetch origin --quiet 2>/dev/null || true
-AHEAD=$(git rev-list origin/main..HEAD --count 2>/dev/null || echo 0)
+AHEAD=$(git rev-list ${TARGET}..HEAD --count 2>/dev/null || echo 0)
 
-printf "%-18s" "Remote sync:"
+printf "%-18s" "Ahead of ${TARGET}:"
 if [[ "$AHEAD" -eq 0 ]]; then
-  printf "${YLW}WARN ~${NC}   nothing to push (already up to date)\n"
+  printf "${YLW}WARN ~${NC}   nothing to merge (dev == ${TARGET})\n"
 else
-  printf "${GRN}PASS ✓${NC}  (${AHEAD} commit(s) ahead of origin/main)\n"
+  printf "${GRN}PASS ✓${NC}  (${AHEAD} commit(s) to merge into ${TARGET})\n"
 fi
 
 # ── T5: Commits list ──────────────────────────────────────────────────────────
 echo ""
 if [[ "$AHEAD" -gt 0 ]]; then
   echo "Commits to release (${AHEAD} total):"
-  git log origin/main..HEAD --oneline | while IFS= read -r line; do
+  git log ${TARGET}..HEAD --oneline | while IFS= read -r line; do
     echo "  $line"
   done
 else
@@ -113,8 +116,8 @@ if [[ $ALL_OK -ne 1 ]]; then
   exit 1
 fi
 
-# ── T7: Confirm + tag + push + release log ────────────────────────────────────
-printf "This will tag ${BLD}v${VERSION}${NC} and push to ${BLD}origin/main${NC}.\n"
+# ── T7: Confirm + merge + release log ────────────────────────────────────────
+printf "This will merge ${BLD}${BRANCH}${NC} → ${BLD}${TARGET}${NC} and push.\n"
 echo "This action cannot be undone without a revert commit."
 echo ""
 echo "$SEP"
@@ -130,21 +133,8 @@ fi
 DATE=$(date +%Y-%m-%d)
 RELEASES="tasks/RELEASES.md"
 
-echo ""
-echo "Tagging v${VERSION}..."
-if git tag "v${VERSION}" 2>/dev/null; then
-  echo "Pushing main..."
-  git push origin main
-
-  echo "Pushing tag..."
-  git push origin "v${VERSION}"
-else
-  echo "Tag v${VERSION} already exists — skipping tag + push."
-fi
-TAG_SHA=$(git rev-parse --short "v${VERSION}")
-
-# Append snapshot to tasks/RELEASES.md (newest first, after the marker comment)
-# Build entry line-by-line to avoid awk multi-line variable limitations
+# Write RELEASES.md on dev before the merge so it's included
+DEV_SHA=$(git rev-parse --short HEAD)
 MARKER_LINE=$(grep -n "<!-- entries added here" "$RELEASES" | cut -d: -f1)
 TMP=$(mktemp)
 {
@@ -154,7 +144,7 @@ TMP=$(mktemp)
   echo "Sprint status:   PASS ✓  (${DONE}/${TOTAL} done)"
   echo "Test suite:      PASS ✓  (${PASSED} passed, ${KNOWN_FAILURES} skipped)"
   echo "Uncommitted:     CLEAN ✓"
-  echo "Tag:             v${VERSION} → ${TAG_SHA}"
+  echo "Merged:          ${BRANCH}@${DEV_SHA} → ${TARGET}"
   echo ""
   echo "---"
   echo ""
@@ -162,9 +152,19 @@ TMP=$(mktemp)
 } > "$TMP"
 mv "$TMP" "$RELEASES"
 
+echo ""
+echo "Logging release..."
 git add tasks/RELEASES.md
 git commit -m "chore: log release v${VERSION}"
-git push origin main
+git push origin "${BRANCH}"
+
+echo "Merging ${BRANCH} → ${TARGET}..."
+git checkout "${TARGET}"
+git merge "${BRANCH}" --no-ff -m "release: v${VERSION}"
+git push origin "${TARGET}"
+
+echo "Returning to ${BRANCH}..."
+git checkout "${BRANCH}"
 
 echo ""
-printf "${GRN}Released v${VERSION} successfully.${NC}\n"
+printf "${GRN}Released v${VERSION} — ${BRANCH} merged into ${TARGET}.${NC}\n"
