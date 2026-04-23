@@ -49,7 +49,7 @@ if [[ "${SKIP_TESTS:-0}" == "1" ]]; then
   printf "${YLW}SKIP ~${NC}  (SKIP_TESTS=1)\n"
   TEST_OK=1
 else
-  TEST_OUT=$(bun test 2>&1 || true)
+  TEST_OUT=$(bun run test 2>&1 || true)
   PASSED=$(echo "$TEST_OUT" | grep -oE '[0-9]+ passed' | grep -oE '[0-9]+' | tail -1 || echo 0)
   FAILED=$(echo "$TEST_OUT" | grep -oE '[0-9]+ failed' | grep -oE '[0-9]+' | tail -1 || echo 0)
   NEW_FAILURES=$(( FAILED > KNOWN_FAILURES ? FAILED - KNOWN_FAILURES : 0 ))
@@ -127,32 +127,39 @@ if [[ "$CONFIRM" != "YES" ]]; then
   exit 0
 fi
 
-echo ""
-echo "Tagging v${VERSION}..."
-git tag "v${VERSION}"
-
-echo "Pushing main..."
-git push origin main
-
-echo "Pushing tag..."
-git push origin "v${VERSION}"
-
-# Append snapshot to tasks/RELEASES.md (newest first, after the marker comment)
 DATE=$(date +%Y-%m-%d)
 RELEASES="tasks/RELEASES.md"
-TMP=$(mktemp)
-awk -v entry="## v${VERSION} — ${DATE}
-Sprint status:   PASS ✓  (${DONE}/${TOTAL} done)
-Test suite:      PASS ✓  (${PASSED} passed, ${KNOWN_FAILURES} skipped)
-Uncommitted:     CLEAN ✓
-Commits:         ${AHEAD} pushed
-Tag:             v${VERSION} → pushed
 
----
-" '
-  /<!-- entries added here/ { print; print ""; print entry; next }
-  { print }
-' "$RELEASES" > "$TMP"
+echo ""
+echo "Tagging v${VERSION}..."
+if git tag "v${VERSION}" 2>/dev/null; then
+  echo "Pushing main..."
+  git push origin main
+
+  echo "Pushing tag..."
+  git push origin "v${VERSION}"
+else
+  echo "Tag v${VERSION} already exists — skipping tag + push."
+fi
+
+# Append snapshot to tasks/RELEASES.md (newest first, after the marker comment)
+# Build entry line-by-line to avoid awk multi-line variable limitations
+MARKER_LINE=$(grep -n "<!-- entries added here" "$RELEASES" | cut -d: -f1)
+TMP=$(mktemp)
+{
+  head -n "$MARKER_LINE" "$RELEASES"
+  echo ""
+  echo "## v${VERSION} — ${DATE}"
+  echo "Sprint status:   PASS ✓  (${DONE}/${TOTAL} done)"
+  echo "Test suite:      PASS ✓  (${PASSED} passed, ${KNOWN_FAILURES} skipped)"
+  echo "Uncommitted:     CLEAN ✓"
+  echo "Commits:         ${AHEAD} pushed"
+  echo "Tag:             v${VERSION} → pushed"
+  echo ""
+  echo "---"
+  echo ""
+  tail -n +$((MARKER_LINE + 1)) "$RELEASES"
+} > "$TMP"
 mv "$TMP" "$RELEASES"
 
 git add tasks/RELEASES.md
