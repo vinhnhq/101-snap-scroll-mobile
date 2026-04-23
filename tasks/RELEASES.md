@@ -10,7 +10,6 @@ Snapshot appended automatically by `scripts/release-check.sh` after each success
 Sprint status:   PASS ✓  (21/21 done)
 Test suite:      PASS ✓  (16 passed, 2 skipped)
 Uncommitted:     CLEAN ✓
-Commits:         0 pushed (already in sync)
-Tag:             v0.1.0 → pushed
+Tag:             v0.1.0 → 1736fc2
 
 ---

@@ -141,6 +141,7 @@ if git tag "v${VERSION}" 2>/dev/null; then
 else
   echo "Tag v${VERSION} already exists — skipping tag + push."
 fi
+TAG_SHA=$(git rev-parse --short "v${VERSION}")
 
 # Append snapshot to tasks/RELEASES.md (newest first, after the marker comment)
 # Build entry line-by-line to avoid awk multi-line variable limitations
@@ -153,8 +154,7 @@ TMP=$(mktemp)
   echo "Sprint status:   PASS ✓  (${DONE}/${TOTAL} done)"
   echo "Test suite:      PASS ✓  (${PASSED} passed, ${KNOWN_FAILURES} skipped)"
   echo "Uncommitted:     CLEAN ✓"
-  echo "Commits:         ${AHEAD} pushed"
-  echo "Tag:             v${VERSION} → pushed"
+  echo "Tag:             v${VERSION} → ${TAG_SHA}"
   echo ""
   echo "---"
   echo ""
