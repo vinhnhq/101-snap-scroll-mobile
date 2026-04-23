@@ -6,6 +6,15 @@ Snapshot appended automatically by `scripts/release-check.sh` after each success
 
 <!-- entries added here by release-check.sh, newest first -->
 
+## v0.2.0 — 2026-04-23
+Sprint status:   PASS ✓  (21/21 done)
+Test suite:      PASS ✓  (16 passed, 2 skipped)
+Uncommitted:     CLEAN ✓
+Tag:             v0.2.0 → 34aedf9
+
+---
+
+
 ## v0.1.0 — 2026-04-23
 Sprint status:   PASS ✓  (21/21 done)
 Test suite:      PASS ✓  (16 passed, 2 skipped)
