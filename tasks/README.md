@@ -41,10 +41,10 @@ Status legend: ✓ done · → in progress · · backlog
 ## Sprint 06 — Release Tooling
 | # | Task | Status |
 |---|------|--------|
-| T1 | [Script scaffold + header](sprint-06-release-tooling/plan.md) | · backlog |
-| T2 | [Sprint status check](sprint-06-release-tooling/plan.md) | · backlog |
-| T3 | [Test suite runner](sprint-06-release-tooling/plan.md) | · backlog |
-| T4 | [Branch / remote state check](sprint-06-release-tooling/plan.md) | · backlog |
-| T5 | [Recent commits list](sprint-06-release-tooling/plan.md) | · backlog |
-| T6 | [Gate summary + color output](sprint-06-release-tooling/plan.md) | · backlog |
-| T7 | [Confirmation: tag + push](sprint-06-release-tooling/plan.md) | · backlog |
+| T1 | [Script scaffold + header](sprint-06-release-tooling/plan.md) | ✓ done |
+| T2 | [Sprint status check](sprint-06-release-tooling/plan.md) | ✓ done |
+| T3 | [Test suite runner](sprint-06-release-tooling/plan.md) | ✓ done |
+| T4 | [Branch / remote state check](sprint-06-release-tooling/plan.md) | ✓ done |
+| T5 | [Recent commits list](sprint-06-release-tooling/plan.md) | ✓ done |
+| T6 | [Gate summary + color output](sprint-06-release-tooling/plan.md) | ✓ done |
+| T7 | [Confirmation: tag + push](sprint-06-release-tooling/plan.md) | ✓ done |
